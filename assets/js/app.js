@@ -1,40 +1,37 @@
 {
     const data = {
-        value: []
+        value: ''
     }
 
     const DOMStrings = {
         buttonLabel: '.button',
         inputValue: '#tweet',
-        inputOut: '#tweet-list'
+        inputOut: '.tweet-list',
     }
 
-    console.log('megint fuck');
-
-
-    const inputIn = () => {
-        let input = document.querySelector(DOMStrings.inputValue).value
-        console.log(input);
-        inputArray(input)
-    }
-
-    let input = document.querySelector(DOMStrings.buttonLabel)
-    input.addEventListener('click', inputIn)
-
-    const inputArray = (input) => {
-        console.log(data);
-        data.value.push(input)
-        console.log(data);
+    const control = () => {
+        inputIn()
         clearInputBox()
-    }
-
-    const clearInputBox = () => {
-        document.querySelector(DOMStrings.inputValue).value = ''
         inputOut(data, DOMStrings)
     }
 
+    document.querySelector(DOMStrings.buttonLabel).addEventListener('click', control)
+
+    document.addEventListener('keypress', (ev) => {
+        if (ev.keyCode === 13 || ev.which === 13) {
+            control()
+        }
+    })
+
+    const inputIn = () =>
+        data.value = document.querySelector(DOMStrings.inputValue).value
+
+    const clearInputBox = () =>
+        document.querySelector(DOMStrings.inputValue).value = ''
+
     const inputOut = (data, dom) => {
-        console.log(data.value);
+        let html = document.querySelector(dom.inputOut);
+        html.insertAdjacentHTML('beforebegin', '<div class="tweet-list"></div>')
         document.querySelector(dom.inputOut).innerHTML = data.value
     }
 }
